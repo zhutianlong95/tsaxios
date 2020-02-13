@@ -32,7 +32,7 @@ const router = express.Router()
 
 router.get('/simple/get', function(req, res) {
   res.json({
-    msg: `hello world`
+    msg: `接口调取成功`
   })
 })
 
