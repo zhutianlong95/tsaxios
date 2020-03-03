@@ -1,5 +1,5 @@
 /* 负责处理url(拼接参数)的工具函数 */
-import { isDate, isObject } from './util'
+import { isDate, isPlainObject } from './util'
 
 // 编码处理
 function encode(val: string): string {
@@ -39,7 +39,7 @@ export function buildURL(url: string, params: any): string {
     values.forEach(val => {
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
 

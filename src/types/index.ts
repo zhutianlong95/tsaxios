@@ -1,5 +1,4 @@
 /* 项目中公共的类型定义文件 */
-
 // 定义请求类型
 export type Method =
   | 'get'
@@ -22,4 +21,5 @@ export interface AxiosRequestConfig {
   method?: Method // 请求方法可选，默认get
   data?: any // data数据，给post方法使用，可以是任何类型
   params?: any // param数据，给get方法使用
+  headers?: any // headers属性,可选
 }
