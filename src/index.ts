@@ -1,15 +1,16 @@
 /* 入口文件，进行简单的请求 */
 
-import { AxiosRequestConfig } from './types/index'
+import { AxiosRequestConfig, AxiosPromise } from './types/index'
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
 import { processHeaders } from './helpers/header'
-function axios(config: AxiosRequestConfig) {
+
+function axios(config: AxiosRequestConfig): AxiosPromise {
   // 预处理config，主要是url和params
   processConfig(config)
   // 进行请求
-  xhr(config)
+  return xhr(config)
 }
 
 /* 处理config */
