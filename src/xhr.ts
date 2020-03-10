@@ -1,4 +1,5 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types/index'
+import { parseHeaders} from './helpers/header'
 
 /* 返回类型为AxiosPromise类型 */
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
@@ -22,10 +23,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if(request.readyState !== 4) { // 如果不是4，则说明请求顺利接收到了
         return 
       }
-
-      const responseHeaders = request.getAllResponseHeaders()
+    
+      const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       // 请求类型不为text的时候，响应数据为响应数据，否则为响应文本
       const responseData = responseType !== 'text' ? request.response : request.responseText
+      
       const response: AxiosResponse = {
         data: responseData,
         status: request.status,
@@ -34,6 +36,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config: config,
         request: request
       }
+      
       resolve(response)
     }
 

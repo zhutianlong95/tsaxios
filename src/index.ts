@@ -1,16 +1,18 @@
 /* 入口文件，进行简单的请求 */
 
-import { AxiosRequestConfig, AxiosPromise } from './types/index'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types/index'
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
-import { transformRequest } from './helpers/data'
+import { transformRequest, transformResponse } from './helpers/data'
 import { processHeaders } from './helpers/header'
 
 function axios(config: AxiosRequestConfig): AxiosPromise {
   // 预处理config，主要是url和params
   processConfig(config)
   // 进行请求
-  return xhr(config)
+  return xhr(config).then((res) => {
+    return transformResponseData(res)
+  })
 }
 
 /* 处理config */
@@ -23,6 +25,7 @@ function processConfig(config: AxiosRequestConfig): void {
 
   // 处理config中的请求数据
   config.data = transformRequestData(config)
+  
 }
 
 /* 转化url */
@@ -42,6 +45,12 @@ function transformHeaders(config: AxiosRequestConfig): any {
   // 给headers一个默认值空对象，在不管有没有headers的情况下，根据data是否为空对象来设置默认的ContentType
   const { headers = {}, data } = config
   return processHeaders(headers, data)
+}
+
+/* 转化响应数据 */
+function transformResponseData(res:AxiosResponse):AxiosResponse {
+  res.data = transformResponse(res.data)
+  return res
 }
 
 export default axios

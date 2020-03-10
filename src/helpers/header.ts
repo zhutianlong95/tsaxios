@@ -14,6 +14,7 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
     }
   })
 }
+
 export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
 
@@ -25,4 +26,29 @@ export function processHeaders(headers: any, data: any): any {
   }
 
   return headers
+}
+
+export function parseHeaders(headers: string):any {
+  let parsed = Object.create(null) // 创建一个空对象
+
+  // 如果headers是一个空字符串，则返回空对象
+  if(!headers) {
+    return parsed
+  }
+
+  headers.split('\r\n').forEach((line) => {
+    let [key, val] = line.split(':')
+    key = key.trim().toLowerCase()
+    if(!key) {
+      // 如果key是空字符串，则跳出，进行下次循环
+      return
+    }
+
+    if(val) {
+      val = val.trim()
+    }
+    parsed[key] = val
+  })
+
+  return parsed
 }
