@@ -21,10 +21,10 @@ export function processHeaders(headers: any, data: any): any {
   // 判断data是否为普通对象，如果是，添加contentType
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
-      headers['Content-Type'] = 'application/json;charset=utf-8'
+      headers['Content-Type'] = 'application/json; charset=utf-8'
     }
   }
-
+  
   return headers
 }
 
@@ -37,16 +37,17 @@ export function parseHeaders(headers: string):any {
   }
 
   headers.split('\r\n').forEach((line) => {
-    let [key, val] = line.split(':')
+    let [key, ...vals] = line.split(':')
     key = key.trim().toLowerCase()
     if(!key) {
       // 如果key是空字符串，则跳出，进行下次循环
       return
     }
 
-    if(val) {
-      val = val.trim()
-    }
+    // if(val) {
+    //   val = val.trim()
+    // }
+    const val = vals.join(':').trim()
     parsed[key] = val
   })
 
