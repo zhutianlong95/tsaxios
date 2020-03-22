@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types/index'
-import { parseHeaders} from './helpers/header'
-import { createError } from './helpers/error'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types/index'
+import { parseHeaders} from '../helpers/header'
+import { createError } from '../helpers/error'
 
 /* 返回类型为AxiosPromise类型 */
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
@@ -22,7 +22,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 打开请求发送数据
-    request.open(method.toUpperCase(), url, true)
+    request.open(method.toUpperCase(), url!, true)
 
     // 错误事件
     request.onerror = function handleError() {
